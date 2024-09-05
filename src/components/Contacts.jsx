@@ -18,6 +18,7 @@ function Contacts() {
   });
   const [isEdit, setIsEdit] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState([]);
+  const [searchContacts, setSearchContacts] = useState("");
 
   const changeHandler = (event) => {
     const name = event.target.name;
@@ -81,6 +82,12 @@ function Contacts() {
     setContacts(newContacts);
     setSelectedContacts([]);
   };
+  const filteredContacts = contacts.filter((contact) => {
+    const fullName = `${contact.name} ${contact.lastName}`.toLowerCase();
+    const email = contact.email.toLowerCase();
+    const searchQuery = searchContacts.toLowerCase();
+    return fullName.includes(searchQuery) || email.includes(searchQuery);
+  });
 
   return (
     <div className={styles.container}>
@@ -97,20 +104,17 @@ function Contacts() {
         ))}
 
         <button onClick={addHandler}>{isEdit ? "save" : "Add"}</button>
-        <button
-          onClick={deleteSelectedHandler}
-          disabled={selectedContacts.length === 0}
-        >
-          deleteselected
-        </button>
       </div>
       <div className={styles.alert}>{alert && <p>{alert}</p>}</div>
       <ContactsList
-        contacts={contacts}
+        contacts={filteredContacts}
         deleteHandler={deleteHandler}
         editHandler={editHandler}
         selectedContacts={selectedContacts}
         toggleSelection={toggleSelection}
+        deleteSelectedHandler={deleteSelectedHandler}
+        searchContacts={searchContacts}
+        setSearchContacts={setSearchContacts}
       />
     </div>
   );

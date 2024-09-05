@@ -9,25 +9,49 @@ function ContactsList({
   editHandler,
   selectedContacts,
   toggleSelection,
+  deleteSelectedHandler,
+  searchContacts,
+  setSearchContacts,
 }) {
-  console.log(contacts);
-  return contacts.length > 0 ? (
+  return (
     <div className={styles.container}>
-      <h3>contactsList</h3>
-      <ul>
-        {contacts.map((contact) => (
-          <ContactItem
-            key={contact.id}
-            contact={contact}
-            deleteHandler={deleteHandler}
-            editHandler={editHandler}
-            toggleSelection={toggleSelection}
-            selected={selectedContacts.includes(contact.id)}
-          />
-        ))}
-      </ul>
+      <div className={styles.contactheader}>
+        <h3>contactsList</h3>
+        <input
+          type="text"
+          placeholder="search by name,email ..."
+          value={searchContacts}
+          onChange={(e) =>
+            setSearchContacts(e.target.value.toLowerCase().trim())
+          }
+        />
+        <button
+          onClick={deleteSelectedHandler}
+          disabled={selectedContacts.length === 0}
+        >
+          deleteselected
+        </button>
+      </div>
+      {contacts.length > 0 ? (
+        <ul>
+          {contacts.map((contact) => (
+            <ContactItem
+              key={contact.id}
+              contact={contact}
+              deleteHandler={deleteHandler}
+              editHandler={editHandler}
+              toggleSelection={toggleSelection}
+              selected={selectedContacts.includes(contact.id)}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className={styles.noResults}>
+          No contacts found matching your search.
+        </p>
+      )}
     </div>
-  ) : null;
+  );
 }
 
 export default ContactsList;
