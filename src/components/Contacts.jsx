@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import styles from "./Contacts.module.css";
 import { v4 } from "uuid";
-
 import ContactsList from "./ContactsList.jsx";
+import Modal from "./Modal.jsx";
 import inputs from "../constants/inputs.js";
 
 function Contacts() {
@@ -19,6 +19,9 @@ function Contacts() {
   const [isEdit, setIsEdit] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [searchContacts, setSearchContacts] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contactToDelete, setContactToDelete] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const changeHandler = (event) => {
     const name = event.target.name;
@@ -55,9 +58,13 @@ function Contacts() {
     });
     setIsEdit(false);
   };
-  const deleteHandler = (id) => {
-    const newContacts = contacts.filter((contact) => contact.id !== id);
-    setContacts(newContacts);
+  const deleteHandler = (contactId) => {
+    const contactToDelete = contacts.find(
+      (contact) => contact.id === contactId
+    );
+    if (contactToDelete) {
+      handleDeleteRequest(contactToDelete);
+    }
   };
 
   const editHandler = (id) => {
@@ -88,6 +95,32 @@ function Contacts() {
     const searchQuery = searchContacts.toLowerCase();
     return fullName.includes(searchQuery) || email.includes(searchQuery);
   });
+  const handleDeleteRequest = (contact) => {
+    setContactToDelete(contact);
+    console.log("Contact to delete:", contact); //
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (contactToDelete) {
+      const newContacts = contacts.filter(
+        (contact) => contact.id !== contactToDelete.id
+      );
+      setContacts(newContacts);
+      setContactToDelete(null);
+    }
+    setSuccessMessage("کاربر با موفقیت حذف شد !");
+    setIsModalOpen(false);
+    setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
+  };
+
+  const cancelDelete = () => {
+    console.log("cancel");
+    setContactToDelete(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className={styles.container}>
@@ -115,7 +148,21 @@ function Contacts() {
         deleteSelectedHandler={deleteSelectedHandler}
         searchContacts={searchContacts}
         setSearchContacts={setSearchContacts}
+        handleDeleteRequest={handleDeleteRequest}
       />
+      <Modal
+        isModal={isModalOpen}
+        confirmDelete={confirmDelete}
+        cancelDelete={cancelDelete}
+        contactName={
+          contactToDelete
+            ? `${contactToDelete.name} ${contactToDelete.lastName}`
+            : ""
+        }
+      />
+      {successMessage && (
+        <div className={styles.successMessage}>{successMessage}</div>
+      )}
     </div>
   );
 }

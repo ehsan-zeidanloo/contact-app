@@ -8,6 +8,7 @@ function ContactItem({
   editHandler,
   selected,
   toggleSelection,
+  handleDeleteRequest
 }) {
   return (
     <div>
@@ -21,7 +22,7 @@ function ContactItem({
         <p>
           <span>📞</span> {contact.phone}
         </p>
-        <button onClick={() => deleteHandler(contact.id)}>🗑️</button>
+        <button onClick={() => handleDeleteRequest(contact)}>🗑️</button>
         <button onClick={() => editHandler(contact.id)}>✏️</button>
         <input
           type="checkbox"

@@ -1,0 +1,64 @@
+.modalOverlay {  
+    position: fixed;  
+    top: 0;  
+    left: 0;  
+    right: 0;  
+    bottom: 0;  
+    background-color: rgba(0, 0, 0, 0.7); /* پس زمینه تاریک و مات */  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    z-index: 20;  
+}  
+
+.modalContent {  
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8); /* حالت شیشه‌ای */  
+    border-radius: 10px; /* گوشه‌های گرد */  
+    padding: 20px;  
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* سایه */  
+    width: 90%;  
+    max-width: 500px; /* حداکثر عرض */  
+    backdrop-filter: blur(10px); /* مات کردن پس‌زمینه */  
+    animation: slideIn 0.3s forwards; /* انیمیشن ورود */  
+}  
+
+@keyframes slideIn {  
+    from {  
+        transform: translateY(-20px); /* حرکت به سمت بالا */  
+        opacity: 0;  
+    }  
+    to {  
+        transform: translateY(0);  
+        opacity: 1;  
+    }  
+}  
+
+.modalButtons {  
+    display: flex;  
+    justify-content: space-between; /* فاصله بین دکمه‌ها */  
+    margin-top: 20px; /* فاصله بالای دکمه‌ها */  
+}  
+
+button {  
+    padding: 10px 15px;  
+    border: none;  
+    border-radius: 5px;  
+    cursor: pointer;  
+    transition: background-color 0.3s; /* انیمیشن تغییر رنگ */  
+}  
+
+
+.confirmBtn {  
+    background-color: red; /* رنگ دکمه "بله" */  
+    color: white;  
+}  
+
+.cancelBtn {  
+    background-color: gray; /* رنگ دکمه "خیر" */  
+    color: white;  
+}  
+
+button:hover {  
+    opacity: 0.8; /* افکت هاور */  
+}

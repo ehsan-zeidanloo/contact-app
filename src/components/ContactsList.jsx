@@ -12,6 +12,7 @@ function ContactsList({
   deleteSelectedHandler,
   searchContacts,
   setSearchContacts,
+  handleDeleteRequest
 }) {
   return (
     <div className={styles.container}>
@@ -42,6 +43,7 @@ function ContactsList({
               editHandler={editHandler}
               toggleSelection={toggleSelection}
               selected={selectedContacts.includes(contact.id)}
+              handleDeleteRequest={handleDeleteRequest}
             />
           ))}
         </ul>
