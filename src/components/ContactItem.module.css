@@ -30,14 +30,15 @@
 }
 
 .item button{
-    display: inline-block;
+    display: flex;
     width: 35px;
     height: 35px;
     margin-right: 5px;
     background-color: #fff;
     border-radius: 50%;
     border:none;
-    text-align:center;
+    justify-content: center;
+    align-items:center;
     line-height: 35px;
     cursor: pointer;
 

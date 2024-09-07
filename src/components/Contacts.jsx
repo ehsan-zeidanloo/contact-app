@@ -109,7 +109,7 @@ function Contacts() {
       setContacts(newContacts);
       setContactToDelete(null);
     }
-    setSuccessMessage("کاربر با موفقیت حذف شد !");
+    setSuccessMessage(" ! کاربر با موفقیت حذف شد");
     setIsModalOpen(false);
     setTimeout(() => {
       setSuccessMessage("");
